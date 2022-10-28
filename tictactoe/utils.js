@@ -1,3 +1,6 @@
+let lineStart = {},
+  lineEnd = {};
+
 function plotGrid(grid, boxHeight, boxWidth) {
   strokeWeight(2);
   line(0, boxHeight, width, boxHeight);
@@ -16,12 +19,17 @@ function plotGrid(grid, boxHeight, boxWidth) {
       text(el, textX, textY);
     }
   }
+  (lineStart.x || lineEnd.y) &&
+    line(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
 }
 
-let lineStart, lineEnd;
-function checkPlayerWin(grid) {
-  const isLineValid = (row) =>
-    row.length === 3 && row[0] !== "" && row.every((el) => el === row[0]);
+function checkPlayerWin(grid, player) {
+  const isLineValid = (row) => {
+    if (row.length === 3 && row[0] !== "" && row.every((el) => el === player)) {
+      return true;
+    }
+    return false;
+  };
 
   let leftDiagEls = [];
   let rigthDiagEls = [];
@@ -57,8 +65,6 @@ function checkPlayerWin(grid) {
       lineStart = { x: width, y: 0 };
       lineEnd = { x: 0, y: height };
     }
-    (lineStart.x || lineEnd.y) &&
-      line(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
 
     if (
       isLineValid(colElements) ||
@@ -71,10 +77,10 @@ function checkPlayerWin(grid) {
   return false;
 }
 
-const checkGameOver = (grid) => {
+const checkTieGame = (grid) => {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[0].length; j++) {
-      if (grid[i][j] === '') return false;
+      if (grid[i][j] === "") return false;
     }
   }
   return true;
