@@ -79,8 +79,8 @@ function draw() {
     noLoop();
     return;
   }
-  // frameRate(1);
-  // autoUpdateGrid();
+  frameRate(1);
+  autoUpdateGrid(); //
 }
 
 function mousePressed() {
