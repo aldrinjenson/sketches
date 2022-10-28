@@ -1,40 +1,62 @@
 /// <reference path="lib/p5.global-mode.d.ts" />
-
 "use strict";
 
-let boxHeight, boxWidth
+let boxHeight, boxWidth;
 function setup() {
   angleMode(DEGREES);
   createCanvas(400, 400, P2D);
   background(200);
-  boxWidth = width / 3
-  boxHeight = height / 3
+  boxWidth = width / 3;
+  boxHeight = height / 3;
 }
 
 let grid = [
-  ['X', 'O', 'X'],
-  ['O', 'O', 'X'],
-  ['X', 'X', 'X'],
-]
+  ["", "", ""],
+  ["", "", ""],
+  ["", "", ""],
+];
 
-const letterStrokeWeight = 10
+let players = ["X", "O"];
+let playerIndex = 0;
+const letterStrokeWeight = 10;
+let hasPlayerWon = false
+let playerWhoWon = undefined
+let isGameOver = false
+
+
+
 function draw() {
-  stroke('black')
-  strokeWeight(2)
-  line(0, boxHeight, width, boxHeight)
-  line(0, boxHeight * 2, width, boxHeight * 2)
-  line(boxWidth, 0, boxWidth, height)
-  line(boxWidth * 2, 0, boxWidth * 2, height)
+  stroke("black");
+  plotGrid(grid, boxHeight, boxWidth)
 
-  strokeWeight(letterStrokeWeight)
-  textSize(40)
-  textAlign(CENTER)
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[0].length; j++) {
-      const el = grid[i][j]
-      let textX = (i * boxWidth) + boxWidth / 2
-      let textY = (j * boxHeight) + (boxHeight / 2) + letterStrokeWeight * 2
-      text(el, textX, textY);
+  if (hasPlayerWon) {
+    alert(`Game Over!! Player ${playerWhoWon} has won!`)
+    noLoop()
+    return;
+  } else if (isGameOver) {
+    alert(`Game Over!! No other possible moves available! Refresh the page to continue again`)
+    noLoop()
+    return;
+  }
+  console.log('drawing');
+
+
+}
+
+function mousePressed() {
+  if (hasPlayerWon || isGameOver) return
+
+  let i = floor(mouseX / boxWidth);
+  let j = floor(mouseY / boxHeight);
+  let currPlayer = players[playerIndex]
+  if (grid[i][j] == "") {
+    grid[i][j] = currPlayer
+    playerIndex = (playerIndex + 1) % players.length;
+    if (checkPlayerWin(grid)) {
+      hasPlayerWon = true
+      playerWhoWon = currPlayer
+    } else if (checkGameOver(grid)) {
+      isGameOver = true
     }
   }
 
