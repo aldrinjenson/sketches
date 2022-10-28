@@ -1,6 +1,5 @@
 
 function plotGrid(grid, boxHeight, boxWidth) {
-
   strokeWeight(2);
   line(0, boxHeight, width, boxHeight);
   line(0, boxHeight * 2, width, boxHeight * 2);
@@ -26,22 +25,19 @@ function checkPlayerWin(grid) {
 
   let leftDiagEls = [];
   let rigthDiagEls = [];
+  let el = undefined
   for (let i = 0; i < grid.length; i++) {
     let colElements = [];
     let rowElements = [];
     for (let j = 0; j < grid[0].length; j++) {
-
-      const el = grid[i][j];
-      if (i == j) {
+      el = grid[i][j];
+      if (i == j)
         leftDiagEls.push(el);
-      }
-      if (i + j === grid.length - 1) {
+      if (i + j === grid.length - 1)
         rigthDiagEls.push(el)
-      }
       colElements.push(grid[j][i]);
       rowElements.push(grid[i][j]);
     }
-    console.log(rigthDiagEls);
 
     if (
       isLineValid(colElements) ||
@@ -56,8 +52,7 @@ function checkPlayerWin(grid) {
 const checkGameOver = grid => {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[0].length; j++) {
-      const el = grid[i][j]
-      if (el === '') return false
+      if (grid[i][j]) return false
     }
   }
   return true
