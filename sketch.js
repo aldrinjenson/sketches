@@ -17,6 +17,7 @@ let grid = [
   ['X', 'X', 'X'],
 ]
 
+const letterStrokeWeight = 10
 function draw() {
   stroke('black')
   strokeWeight(2)
@@ -25,14 +26,14 @@ function draw() {
   line(boxWidth, 0, boxWidth, height)
   line(boxWidth * 2, 0, boxWidth * 2, height)
 
-  strokeWeight(10)
+  strokeWeight(letterStrokeWeight)
   textSize(40)
+  textAlign(CENTER)
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[0].length; j++) {
       const el = grid[i][j]
       let textX = (i * boxWidth) + boxWidth / 2
-      let textY = (j * boxHeight) + boxHeight / 2
-      // translate(-boxWidth / 4, -boxHeight / 4)
+      let textY = (j * boxHeight) + (boxHeight / 2) + letterStrokeWeight * 2
       text(el, textX, textY);
     }
   }
