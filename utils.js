@@ -74,7 +74,7 @@ function checkPlayerWin(grid) {
 const checkGameOver = (grid) => {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[0].length; j++) {
-      if (grid[i][j]) return false;
+      if (grid[i][j] === '') return false;
     }
   }
   return true;

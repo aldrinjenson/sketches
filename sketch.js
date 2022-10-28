@@ -7,25 +7,32 @@ const grid = [
   ["", "", ""],
 ];
 
+let players = ["X", "O"];
+let human, ai
+let currPlayer = "X"; // first player
 let boxHeight, boxWidth;
-let currPlayer = undefined
 function setup() {
+  if (random() < 0.5) {
+    human = "X"
+    ai = 'O'
+  } else {
+    human = "O"
+    ai = "X"
+  }
+  console.log({ human, ai, currPlayer });
   angleMode(DEGREES);
   createCanvas(400, 400, P2D);
   background(200);
   boxWidth = width / 3;
   boxHeight = height / 3;
   for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[0].length; j++) {
-    }
+    for (let j = 0; j < grid[0].length; j++) { }
   }
 }
 
-let players = ["X", "O"];
 let playerIndex = 0;
 const letterStrokeWeight = 10;
 let hasPlayerWon = false;
-let playerWhoWon = undefined;
 let isGameOver = false;
 let message = "";
 
@@ -38,18 +45,23 @@ const generateRandomPair = () => {
 };
 
 const updateStatus = () => {
+  isGameOver = checkGameOver(grid);
   if (checkPlayerWin(grid)) {
     hasPlayerWon = true;
-    playerWhoWon = currPlayer;
+    let playerWhoWon = "AI";
+    if (currPlayer === human) {
+      playerWhoWon = "Human";
+    }
     message = `Game Over!!\nPlayer ${playerWhoWon} has won!`;
-  } else if (checkGameOver(grid)) {
-    isGameOver = true;
+  } else if (isGameOver) {
+    // isGameOver = true;
     message =
       "Game Over!!\nNo other possible moves available! Refresh the page to continue again";
   }
+  currPlayer = players[playerIndex];
 };
 
-function autoUpdateGrid() {
+function nextTurn() {
   let availablePairs = [];
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[0].length; j++) {
@@ -60,8 +72,9 @@ function autoUpdateGrid() {
   }
 
   if (!availablePairs.length) return;
-  let randomIndex = floor(random(availablePairs.length));
-  const newPair = availablePairs[randomIndex];
+  // let randomIndex = floor(random(availablePairs.length));
+  // const newPair = availablePairs[randomIndex];
+  const newPair = random(availablePairs)
   const [i, j] = newPair;
 
   currPlayer = players[playerIndex];
@@ -77,10 +90,12 @@ function draw() {
   if (message) {
     createP(message);
     noLoop();
-    return;
   }
-  frameRate(1);
-  autoUpdateGrid(); //
+  frameRate(3);
+  if (currPlayer === ai) {
+    console.log("inside");
+    nextTurn(); //
+  }
 }
 
 function mousePressed() {
