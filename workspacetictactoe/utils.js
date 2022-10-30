@@ -1,54 +1,54 @@
-let lineStart = {},
-  lineEnd = {};
+const getWinner = (grid) => {
+  const isLineValid = (row) =>
+    row.length === 3 && row[0] !== "" && row.every((el) => el === row[0]);
 
-function plotGrid(grid, boxHeight, boxWidth) {
-  strokeWeight(2);
-  line(0, boxHeight, width, boxHeight);
-  line(0, boxHeight * 2, width, boxHeight * 2);
-  line(boxWidth, 0, boxWidth, height);
-  line(boxWidth * 2, 0, boxWidth * 2, height);
-
-  strokeWeight(letterStrokeWeight);
-  textSize(40);
-  textAlign(CENTER);
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[0].length; j++) {
-      const el = grid[i][j];
-      let textX = i * boxWidth + boxWidth / 2;
-      let textY = j * boxHeight + boxHeight / 2 + letterStrokeWeight * 2;
-      text(el, textX, textY);
-    }
-  }
-  (lineStart.x || lineEnd.y) &&
-    line(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
-}
-
-function checkPlayerWin(grid, player) {
-  const isLineValid = (row) => {
-    if (row.length === 3 && row[0] !== "" && row.every((el) => el === player)) {
-      return true;
-    }
-    return false;
-  };
-
-  let leftDiagEls = [];
-  let rigthDiagEls = [];
-  let el = undefined;
   let i, j;
+  let leftDiagEls = [];
+  let rightDiagEls = [];
+  let freeSpaces = 0;
   for (i = 0; i < grid.length; i++) {
     let colElements = [];
     let rowElements = [];
     for (j = 0; j < grid[0].length; j++) {
+      if (grid[i][j] === "") freeSpaces += 1;
       el = grid[i][j];
       if (i == j) leftDiagEls.push(el);
-      if (i + j === grid.length - 1) rigthDiagEls.push(el);
+      if (i + j === grid.length - 1) rightDiagEls.push(el);
       colElements.push(grid[i][j]);
       rowElements.push(grid[j][i]);
     }
 
-    stroke("green");
-    let lineStart = {},
-      lineEnd = {};
+    if (isLineValid(colElements)) return colElements[0];
+    if (isLineValid(rowElements)) return rowElements[0];
+    if (isLineValid(leftDiagEls)) return leftDiagEls[0];
+    if (isLineValid(rightDiagEls)) return rightDiagEls[0];
+  }
+
+  if (freeSpaces === 0) return "tie";
+  return null;
+};
+
+const drawWinningStrikeLine = (grid) => {
+  const isLineValid = (row) =>
+    row.length === 3 && row[0] !== "" && row.every((el) => el === row[0]);
+
+  let lineStart = {},
+    lineEnd = {};
+  let i, j;
+  let leftDiagEls = [];
+  let rightDiagEls = [];
+  let freeSpaces = 0;
+  for (i = 0; i < grid.length; i++) {
+    let colElements = [];
+    let rowElements = [];
+    for (j = 0; j < grid[0].length; j++) {
+      if (grid[i][j] === "") freeSpaces += 1;
+      el = grid[i][j];
+      if (i == j) leftDiagEls.push(el);
+      if (i + j === grid.length - 1) rightDiagEls.push(el);
+      colElements.push(grid[i][j]);
+      rowElements.push(grid[j][i]);
+    }
     if (isLineValid(rowElements)) {
       lineStart = { x: 0, y: i * boxHeight + boxHeight / 2 };
       lineEnd = { x: width, y: i * boxWidth + boxHeight / 2 };
@@ -61,27 +61,15 @@ function checkPlayerWin(grid, player) {
       lineStart = { x: 0, y: 0 };
       lineEnd = { x: width, y: height };
     }
-    if (isLineValid(rigthDiagEls)) {
+    if (isLineValid(rightDiagEls)) {
       lineStart = { x: width, y: 0 };
       lineEnd = { x: 0, y: height };
     }
-
-    if (
-      isLineValid(colElements) ||
-      isLineValid(rowElements) ||
-      isLineValid(leftDiagEls) ||
-      isLineValid(rigthDiagEls)
-    )
-      return true;
   }
-  return false;
-}
 
-const checkTieGame = (grid) => {
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[0].length; j++) {
-      if (grid[i][j] === "") return false;
-    }
+  if (lineStart.x || lineEnd.y) {
+    strokeWeight(5);
+    stroke("green");
+    line(lineStart.x, lineStart.y, lineEnd.x, lineEnd.y);
   }
-  return true;
 };

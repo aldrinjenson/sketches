@@ -28,9 +28,6 @@ function setup() {
   background(200);
   boxWidth = width / 3;
   boxHeight = height / 3;
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[0].length; j++) { }
-  }
 }
 
 let playerIndex = 0;

@@ -47,8 +47,7 @@ function checkPlayerWin(grid, player) {
     }
 
     stroke("green");
-    let lineStart = {},
-      lineEnd = {};
+
     if (isLineValid(rowElements)) {
       lineStart = { x: 0, y: i * boxHeight + boxHeight / 2 };
       lineEnd = { x: width, y: i * boxWidth + boxHeight / 2 };
