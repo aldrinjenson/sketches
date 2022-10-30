@@ -4,8 +4,6 @@
 
 let dxSlider;
 let radiusSlider;
-let halvingSlider;
-let dx;
 function setup() {
   createCanvas(400, 400, P2D);
   background(0);
@@ -13,6 +11,7 @@ function setup() {
   noFill();
   dxSlider = createSlider(2, 4, 2, 0.05);
   radiusSlider = createSlider(2, 1000, 200);
+  createP("Adjust radius and dx value using sliders");
 }
 
 function draw() {
