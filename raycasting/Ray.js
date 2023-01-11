@@ -38,15 +38,20 @@ class Ray {
 
     const doesLineIntersects = t > 0 && t < 1 && u > 0;
 
+    // this.draw();
+
     if (doesLineIntersects) {
+      console.log("inside");
+
       const pt = createVector();
       pt.x = x1 + t * (x2 - x1);
       pt.y = y1 + t * (y2 - y1);
 
-      push();
+      return pt;
+      // push();
       // translate(this.pos.x, this.pos.y);
       // line(0, 0, pt.x, pt.y);
-      pop();
+      // pop();
     }
   }
 }

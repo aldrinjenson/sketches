@@ -52,29 +52,29 @@ function draw() {
 }
 
 const playNextBestMove = () => {
-  let maxScore = -Infinity;
-  let bestPair = undefined;
+  let bestPair = generateRandomPair();
+  // let maxScore = -Infinity;
 
-  let freeSpaces = 0;
-  for (let i = 0; i < grid.length; i++) {
-    for (let j = 0; j < grid[0].length; j++) {
-      if (grid[i][j] === "") {
-        freeSpaces++;
-        const gridCopy = JSON.parse(JSON.stringify(grid));
-        gridCopy[i][j] = "O";
-        let score = miniMax(gridCopy, 3, false);
-        console.log({ score });
-        if (score > maxScore) {
-          maxScore = score;
-          bestPair = [i, j];
-        }
-      }
-    }
-  }
-  if (freeSpaces === 0) {
-    console.log("all spaces filled");
-    return;
-  }
+  // let freeSpaces = 0;
+  // for (let i = 0; i < grid.length; i++) {
+  //   for (let j = 0; j < grid[0].length; j++) {
+  //     if (grid[i][j] === "") {
+  //       freeSpaces++;
+  //       const gridCopy = JSON.parse(JSON.stringify(grid));
+  //       gridCopy[i][j] = "O";
+  //       let score = miniMax(gridCopy, 3, false);
+  //       console.log({ score });
+  //       if (score > maxScore) {
+  //         maxScore = score;
+  //         bestPair = [i, j];
+  //       }
+  //     }
+  //   }
+  // }
+  // if (freeSpaces === 0) {
+  //   console.log("all spaces filled");
+  //   return;
+  // }
   const [i, j] = bestPair;
   grid[i][j] = currPlayer;
   updatePlayerTurn();

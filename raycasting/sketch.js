@@ -15,6 +15,7 @@ function setup() {
     let newWall = new Wall(start, end);
     walls.push(newWall);
   }
+  frameRate(30);
 }
 
 function draw() {
@@ -25,4 +26,5 @@ function draw() {
   entity.show();
   entity.update(mouseX, mouseY);
   entity.showRays(walls);
+  noLoop();
 }

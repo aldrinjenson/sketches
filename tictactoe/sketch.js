@@ -45,23 +45,23 @@ const generateRandomPair = () => {
 };
 
 const updateStatus = () => {
-  let winner = null
-  let winnerName = ''
+  let winner = null;
+  let winnerName = "";
   if (checkPlayerWin(grid, human)) {
     winnerName = "Human";
-    winner = human
+    winner = human;
     message = `Game Over!!\nPlayer ${winnerName} has won!`;
   } else if (checkPlayerWin(grid, ai)) {
     winnerName = "AI";
-    winner = ai
+    winner = ai;
     message = `Game Over!!\nPlayer ${winnerName} has won!`;
   } else if (checkTieGame(grid)) {
-    winner = 'tie'
+    winner = "tie";
     message =
       "Game Over!!\nNo other possible moves available! Refresh the page to continue again";
   }
   currPlayer = players[playerIndex];
-  return winner
+  return winner;
 };
 
 function nextBestTurn() {
@@ -70,9 +70,7 @@ function nextBestTurn() {
   let bestPair = undefined;
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[0].length; j++) {
-
       if (grid[i][j] === "") {
-
         grid[i][j] = ai;
         let score = miniMax(grid, 0, false);
         console.log({ score });
@@ -82,7 +80,7 @@ function nextBestTurn() {
           bestPair = [i, j];
         }
         availablePairs.push([i, j]);
-        grid[i][j] = ''
+        grid[i][j] = "";
       }
     }
   }
@@ -102,22 +100,21 @@ const scoreMap = {
   tie: 0,
 };
 
-let maxDepth = 10
+let maxDepth = 10;
 const miniMax = (board, depth, shouldMaximise) => {
-  let winner = updateStatus()
+  let winner = updateStatus();
   console.log(board[0]);
 
   // console.log({ human, ai, winner });
   console.log({ winner });
   if (depth === maxDepth) {
-    console.log('max depth reached');
-    return
+    console.log("max depth reached");
+    return;
   }
-
 
   if (winner !== null) {
     const score = scoreMap[winner];
-    console.log('returning score = ', score);
+    console.log("returning score = ", score);
 
     return score;
   }
@@ -143,8 +140,7 @@ const miniMax = (board, depth, shouldMaximise) => {
         }
       }
     }
-  }
-  else {
+  } else {
     bestScore = Infinity;
     for (let i = 0; i < board.length; i++) {
       for (let j = 0; j < board[0].length; j++) {
@@ -161,7 +157,6 @@ const miniMax = (board, depth, shouldMaximise) => {
   return bestScore;
 };
 
-
 function draw() {
   stroke("black");
   plotGrid(grid, boxHeight, boxWidth);
@@ -169,7 +164,6 @@ function draw() {
     createP(message);
     noLoop();
     console.log(grid);
-
   }
   frameRate(3);
   if (currPlayer === ai) {
