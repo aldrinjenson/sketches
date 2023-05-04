@@ -1,7 +1,7 @@
 let rectangleHeights = [];
 let w;
 let shouldIncreaseHeight = true;
-const maxRectangles = 30;
+const maxRectangles = 20;
 
 function setup() {
   createCanvas(600, 300);
