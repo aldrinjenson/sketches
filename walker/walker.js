@@ -14,6 +14,20 @@ class Walker {
   }
 
   step() {
+    //// non-uniform distribution
+    // let p = random(1);
+    // console.log(p);
+    // if (p < 0.4) {
+    //   this.x++;
+    // } else if (p < 0.6) {
+    //   this.x--;
+    // } else if (p < 0.8) {
+    //   this.y++;
+    // } else {
+    //   this.y--;
+    // }
+
+    // uniform distribution
     let xstep = random(-1, 1);
     let ystep = random(-1, 1);
     this.x += xstep * 2;
