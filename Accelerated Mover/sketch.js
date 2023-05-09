@@ -1,5 +1,5 @@
 let mover;
-let selector;
+let selector; // to choose b/w type of acceleration
 
 function setup() {
   selector = createSelect();
@@ -17,6 +17,4 @@ function draw() {
   mover.update();
   mover.checkEdges();
   mover.show();
-  // ellipse(position.x, position.y, 30);
-  // position.add(velocity);
 }

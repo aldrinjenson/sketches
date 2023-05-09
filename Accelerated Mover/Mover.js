@@ -1,4 +1,4 @@
-const MAX_SPEED = 30;
+const MAX_SPEED = 15;
 let accelerationType;
 
 let accelerationMode = "Constant";
@@ -20,7 +20,7 @@ class Mover {
       this.acceleration = createVector(-0.001, 0.01);
     } else {
       this.acceleration = p5.Vector.random2D(); // random unit vector
-      this.acceleration.mult(0.5);
+      this.acceleration.mult(0.5); // to make the value a bit smaller than 1
     }
     this.velocity.add(this.acceleration);
     this.velocity.limit(MAX_SPEED);
