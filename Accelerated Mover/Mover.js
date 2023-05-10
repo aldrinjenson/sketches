@@ -8,6 +8,7 @@ function handleSelectChange(e) {
   accelerationMode = newVal;
 }
 
+let t = 5;
 class Mover {
   constructor() {
     this.position = createVector(random(width), random(height));
@@ -16,11 +17,16 @@ class Mover {
     this.acceleration = createVector();
   }
   update() {
-    if (accelerationMode == "Constant") {
+    if (accelerationMode === "Constant") {
       this.acceleration = createVector(-0.001, 0.01);
-    } else {
+    } else if (accelerationMode === "Random") {
       this.acceleration = p5.Vector.random2D(); // random unit vector
       this.acceleration.mult(0.5); // to make the value a bit smaller than 1
+    } else if (accelerationMode === "Perlin") {
+      let n = noise(t);
+      t += 0.001;
+      this.acceleration = createVector(n, n);
+      this.acceleration.mult(0.01); // to make the value a bit smaller than 1
     }
     this.velocity.add(this.acceleration);
     this.velocity.limit(MAX_SPEED);

@@ -5,6 +5,7 @@ function setup() {
   selector = createSelect();
   selector.option("Constant");
   selector.option("Random");
+  selector.option("Perlin");
   selector.changed(handleSelectChange);
   createCanvas(800, 600);
   mover = new Mover();
