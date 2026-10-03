@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotating Circles</title>
+  <style>
+    body { margin: 0; background: #0b0d12; color: #ddd; font: 13px/1.4 system-ui, sans-serif; overflow: hidden; }
+    #ui { position: fixed; top: 10px; left: 10px; background: rgba(0,0,0,.6); padding: 10px 12px; border-radius: 8px; }
+    #ui label { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+    #ui input[type=range] { width: 120px; }
+    #ui .hint { margin-top: 6px; color: #888; font-size: 12px; }
+    #ui .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; }
+  </style>
+  <script src="lib/p5.min.js"></script>
+  <script src="sketch.js"></script>
+</head>
+<body><div id="ui"></div></body>
+</html>
